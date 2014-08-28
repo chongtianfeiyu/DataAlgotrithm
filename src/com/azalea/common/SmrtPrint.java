@@ -15,9 +15,9 @@ public class SmrtPrint {
 		System.out.println(ob);
 	}
 	
-	public static <T> void treePrePrint(BinNode<T> rootNode){
-		
-		
-		
-	}
+//	public static <T> void treePrePrint(BinNode<T> rootNode){
+//		
+//		
+//		
+//	}
 }
