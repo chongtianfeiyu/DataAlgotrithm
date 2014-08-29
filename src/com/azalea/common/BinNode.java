@@ -1,19 +1,16 @@
 package com.azalea.common;
 
-public class BinNode<T extends Comparable> {
+/**
+ * @author i-xiepenggang
+ * 
+ * @param <T>
+ */
+public class BinNode<T extends Comparable> implements Comparable<BinNode<T>> {
 
-	private T node;
+	private T data;
 
-	private BinNode<T> leftNode;
-	private BinNode<T> rightNode;
-
-	public BinNode(T node) {
-		this.node = node;
-	}
-
-	public T getData() {
-		return node;
-	}
+	private BinNode<T> leftNode = null;
+	private BinNode<T> rightNode = null;
 
 	public boolean hasLeftNode() {
 		return leftNode != null;
@@ -23,12 +20,17 @@ public class BinNode<T extends Comparable> {
 		return rightNode != null;
 	}
 
-	public T getNode() {
-		return node;
+	public T getData() {
+		return data;
 	}
 
-	public void setNode(T node) {
-		this.node = node;
+	public void setData(T data) {
+		this.data = data;
+	}
+
+	public BinNode(T data) {
+		super();
+		this.data = data;
 	}
 
 	public BinNode<T> getLeftNode() {
@@ -47,4 +49,14 @@ public class BinNode<T extends Comparable> {
 		this.rightNode = rightNode;
 	}
 
+	@Override
+	public String toString() {
+		return "[" + this.data + "]";
+	}
+
+	@Override
+	public int compareTo(BinNode node) {
+		// TODO Auto-generated method stub
+		return this.data.compareTo(node.data);
+	}
 }
