@@ -1,6 +1,5 @@
 package com.azalea.maxSub;
 
-
 import com.azalea.common.ArrayGennerator;
 import com.azalea.common.SmrtPrint;
 

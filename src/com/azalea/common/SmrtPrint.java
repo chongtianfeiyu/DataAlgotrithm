@@ -63,6 +63,12 @@ public class SmrtPrint {
 		println("");
 	}
 
+	public static <T extends Comparable> void prettyPrint(
+			final BinNode<T> rootNode) {
+
+		print("it hasn't done");
+	}
+
 	public static <T extends Comparable> void treePostPrint(
 			final BinNode<T> rootNode) {
 
@@ -90,10 +96,8 @@ public class SmrtPrint {
 				if (curNode.hasLeftNode()) {
 					nodeStack.push(curNode.getLeftNode());
 				}
-
 			}
 		}
-
 		println("");
 	}
 }

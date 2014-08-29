@@ -1,14 +1,12 @@
 package com.azalea.common;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class BinTreeGennerater {
 
-	public <T extends Comparable> BinNode getBinSearchTree(T[] arrObj) {
-		BinNode rootNode = null;
+	public <T extends Comparable<?>> BinNode<T> getBinSearchTree(T[] arrObj) {
+		BinNode<T> rootNode = null;
 		for (int i = 0; i < arrObj.length; ++i) {
 			if (rootNode == null) {
 				rootNode = createBinNode(arrObj[i]);
@@ -19,35 +17,51 @@ public class BinTreeGennerater {
 		return rootNode;
 	}
 
-	private <T extends Comparable> void buildBinSearchNode(BinNode<T> rootNode,
-			BinNode<T> node) {
+	public <T extends Comparable<?>> void buildBinSearchNode(
+			BinNode<T> rootNode, BinNode<T> node) {
+
 		if (rootNode != null) {
-			BinNode curNode = rootNode;
+
+			BinNode<T> curNode = rootNode;
 			while (curNode != null) {
-				if (node.compareTo(curNode) > 0) {
-					curNode = curNode.getRightNode();
-				} else if (node.compareTo(curNode) < 0) {
-					curNode = curNode.getLeftNode();
+
+				int compareValue = node.compareTo(curNode);
+
+				if (compareValue < 0) {
+
+					if (curNode.hasLeftNode()) {
+						curNode = curNode.getLeftNode();
+					} else {
+						curNode.setLeftNode(node);
+						return;
+					}
+
+				} else if (compareValue > 0) {
+
+					if (curNode.hasRightNode()) {
+						curNode = curNode.getRightNode();
+					} else {
+						curNode.setRightNode(node);
+						return;
+					}
 				} else {
 					curNode = node;
 					return;
 				}
 			}
-			curNode = node;
 		}
 	}
 
-	public <T extends Comparable> BinNode getBinTree(T[] arrObj) {
+	public <T extends Comparable> BinNode<T> getBinTree(T[] arrObj) {
 
-		BinNode rootBin = null;
-		BinNode lstNode = null;
+		BinNode<T> rootBin = null;
 
 		Deque<BinNode<T>> nodeQue = new LinkedList<BinNode<T>>();
 
 		if (arrObj != null) {
 			for (T obj : arrObj) {
 
-				BinNode currentNode = createBinNode(obj);
+				BinNode<T> currentNode = createBinNode(obj);
 				nodeQue.add(currentNode);
 
 				if (rootBin == null) {
@@ -55,7 +69,7 @@ public class BinTreeGennerater {
 					continue;
 				}
 
-				BinNode headNode = nodeQue.getFirst();
+				BinNode<T> headNode = nodeQue.getFirst();
 
 				if (headNode.hasLeftNode() == false) {
 					headNode.setLeftNode(currentNode);
@@ -63,14 +77,13 @@ public class BinTreeGennerater {
 					headNode.setRightNode(currentNode);
 					nodeQue.removeFirst();
 				}
-
 			}
 		}
 
 		return rootBin;
 	}
 
-	private <T extends Comparable> BinNode createBinNode(T obj) {
+	public <T extends Comparable> BinNode createBinNode(T obj) {
 
 		BinNode node = new BinNode(obj);
 
