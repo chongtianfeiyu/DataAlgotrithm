@@ -55,7 +55,12 @@ public class BinSearchTree<T extends Comparable> {
 		return false;
 	}
 
-	private T findMin(BinNode<T> node) {
+	private BinNode<T> find(T obj) {
+
+		return null;
+	}
+
+	private BinNode<T> findMin(BinNode<T> node) {
 
 		BinNode<T> curNode = node;
 		while (curNode != null) {
@@ -65,10 +70,10 @@ public class BinSearchTree<T extends Comparable> {
 				break;
 			}
 		}
-		return curNode.getData();
+		return curNode;
 	}
 
-	private T findMax(BinNode<T> node) {
+	private BinNode<T> findMax(BinNode<T> node) {
 
 		BinNode<T> curNode = node;
 		while (curNode != null) {
@@ -78,16 +83,16 @@ public class BinSearchTree<T extends Comparable> {
 				break;
 			}
 		}
-		return curNode.getData();
+		return curNode;
 
 	}
 
 	public T findMin() {
-		return findMin(this.rootNode);
+		return findMin(this.rootNode).getData();
 	}
 
 	public T findMax() {
-		return findMax(this.rootNode);
+		return findMax(this.rootNode).getData();
 	}
 
 	public void insert(T obj) {
@@ -106,28 +111,59 @@ public class BinSearchTree<T extends Comparable> {
 	private boolean remove(BinNode<T> node, T obj) {
 
 		BinNode<T> nodeForSearch = gen.createBinNode(obj);
-		BinNode<T> curNode = node;
+		BinNode<T> deleteNode = node;
 
-		while (curNode != null) {
-
-			int compareValue = nodeForSearch.compareTo(curNode);
+		while (deleteNode != null) {
+			int compareValue = nodeForSearch.compareTo(deleteNode);
 			if (compareValue < 0) {
-				curNode = curNode.getLeftNode();
+				deleteNode = deleteNode.getLeftNode();
 			} else if (compareValue > 0) {
-				curNode = curNode.getRightNode();
+				deleteNode = deleteNode.getRightNode();
 			} else {
-				if ((curNode.hasLeftNode()) && (curNode.hasRightNode())) {
+				if ((deleteNode.hasLeftNode()) && (deleteNode.hasRightNode())) {
+					BinNode<T> replaceNode = findMin(deleteNode.getRightNode());
+					if (replaceNode.getParrentNode() == deleteNode) {
+						transPlant(deleteNode, replaceNode);
+						replaceNode.setLeftNode(deleteNode.getLeftNode());
+						replaceNode.getLeftNode().setParrentNode(replaceNode);
+					} else {
+						transPlant(replaceNode, replaceNode.getRightNode());
+						replaceNode.setRightNode(deleteNode.getRightNode());
+						replaceNode.getRightNode().setParrentNode(replaceNode);
+					}
 
-					BinNode<T> deleteNode = curNode;
+					// curNode = replaceNode;
+					// replaceNode = replaceNode.getRightNode();
 
+				} else if (deleteNode.hasLeftNode()) {
+					transPlant(deleteNode, deleteNode.getLeftNode());
 				} else {
-					curNode = (curNode.hasLeftNode()) ? curNode.getLeftNode()
-							: curNode.getRightNode();
+					transPlant(deleteNode, deleteNode.getRightNode());
 				}
+
+				return true;
 			}
 		}
 		return false;
+	}
 
+	private void transPlant(BinNode<T> deleteNode, BinNode<T> replaceNode) {
+		// if it is not the root node
+		if (deleteNode.hasParrentNode()) {
+			if (deleteNode.getParrentNode().getLeftNode() == deleteNode) {
+
+				deleteNode.getParrentNode().setLeftNode(replaceNode);
+			} else {
+				deleteNode.getParrentNode().setRightNode(replaceNode);
+			}
+		}
+		// if it is the root node
+		else {
+			this.rootNode = replaceNode;
+		}
+		replaceNode.setParrentNode(deleteNode.getParrentNode());
+
+		deleteNode = null;
 	}
 
 	private void putNode(T[] objs) {

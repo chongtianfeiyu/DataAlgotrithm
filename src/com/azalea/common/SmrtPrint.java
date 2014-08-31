@@ -23,6 +23,7 @@ public class SmrtPrint {
 		System.out.print(ob);
 	}
 
+	
 	public static <T extends Comparable> void treePrePrint(
 			final BinNode<T> rootNode) {
 

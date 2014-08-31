@@ -11,7 +11,7 @@ public class TestBinTree {
 
 		BinTreeGennerater gen = new BinTreeGennerater();
 		// 前序遍历:
-		char[] arrObjects = "cduwefsoi".toCharArray();
+		char[] arrObjects = "947463658cduwefsoi".toCharArray();
 		System.out.println(arrObjects.length);
 		Character[] arrChars = new Character[arrObjects.length];
 		for (int i = 0; i < arrObjects.length; ++i) {
@@ -24,18 +24,7 @@ public class TestBinTree {
 		// SmrtPrint.treeMidPrint(binTree.getTree());
 		// SmrtPrint.treePostPrint(binTree.getTree());
 
-		SmrtPrint.println(binTree.contains('x'));
-		SmrtPrint.println(binTree.findMax());
-		SmrtPrint.println(binTree.findMin());
-
-		binTree.insert('a');
-
-		SmrtPrint.println(binTree.findMax());
-		SmrtPrint.println(binTree.findMin());
-
-		binTree.insert('z');
-
-		SmrtPrint.println(binTree.findMax());
-		SmrtPrint.println(binTree.findMin());
+		System.out.println(binTree.remove('e'));
+		SmrtPrint.treeMidPrint(binTree.getTree());
 	}
 }

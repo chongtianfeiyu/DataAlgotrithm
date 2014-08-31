@@ -11,6 +11,7 @@ public class BinNode<T extends Comparable> implements Comparable<BinNode<T>> {
 
 	private BinNode<T> leftNode = null;
 	private BinNode<T> rightNode = null;
+	private BinNode<T> parrentNode = null;
 
 	public boolean hasLeftNode() {
 		return leftNode != null;
@@ -18,6 +19,18 @@ public class BinNode<T extends Comparable> implements Comparable<BinNode<T>> {
 
 	public boolean hasRightNode() {
 		return rightNode != null;
+	}
+
+	public boolean hasParrentNode() {
+		return parrentNode != null;
+	}
+
+	public BinNode<T> getParrentNode() {
+		return parrentNode;
+	}
+
+	public void setParrentNode(BinNode<T> parrentNode) {
+		this.parrentNode = parrentNode;
 	}
 
 	public T getData() {

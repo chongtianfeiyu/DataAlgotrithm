@@ -24,28 +24,26 @@ public class BinTreeGennerater {
 
 			BinNode<T> curNode = rootNode;
 			while (curNode != null) {
-
 				int compareValue = node.compareTo(curNode);
-
 				if (compareValue < 0) {
 
 					if (curNode.hasLeftNode()) {
 						curNode = curNode.getLeftNode();
 					} else {
 						curNode.setLeftNode(node);
+						node.setParrentNode(curNode);
 						return;
 					}
-
 				} else if (compareValue > 0) {
 
 					if (curNode.hasRightNode()) {
 						curNode = curNode.getRightNode();
 					} else {
 						curNode.setRightNode(node);
+						node.setParrentNode(curNode);
 						return;
 					}
 				} else {
-					curNode = node;
 					return;
 				}
 			}
