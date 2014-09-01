@@ -1,6 +1,11 @@
 package com.azalea.common;
 
 public class Sort {
+	
+	/**
+	 * 希尔排序
+	 * @param arrObjs
+	 */
 	public static <T extends Comparable<T>> void shellSort(T[] arrObjs) {
 
 		int j = 0;
@@ -38,7 +43,14 @@ public class Sort {
 		}
 
 	}
-
+	
+	/**
+	 * 快速排序核心,分割算法
+	 * @param arrObjs
+	 * @param l
+	 * @param h
+	 * @return
+	 */
 	private static <T extends Comparable<T>> int partition(T[] arrObjs,
 			final int l, final int h) {
 
@@ -71,7 +83,12 @@ public class Sort {
 		return left;
 	}
 
-	// 重新调整小顶堆的算法
+	/**
+	 * 重新调整小顶堆
+	 * @param a
+	 * @param parrentIndex
+	 * @param length
+	 */
 	private static <T extends Comparable<T>> void MinHeapFixdown(T a[],
 			int parrentIndex, int length) {
 		int sonIndex;
@@ -95,13 +112,20 @@ public class Sort {
 		a[parrentIndex] = temp;
 	}
 
-	// 建立最小堆
+	/**
+	 * 建立小顶堆
+	 * @param a
+	 */
 	public static <T extends Comparable<T>> void MakeMinHeap(T a[]) {
 		int n = a.length;
 		for (int i = n / 2 - 1; i >= 0; i--)
 			MinHeapFixdown(a, i, n);
 	}
-
+	
+	/**
+	 * 堆排序
+	 * @param a
+	 */
 	public static <T extends Comparable<T>> void heapSort(T a[]) {
 
 		MakeMinHeap(a);
@@ -115,7 +139,11 @@ public class Sort {
 			MinHeapFixdown(a, 0, i);
 		}
 	}
-
+	
+	/**
+	 * 插入排序
+	 * @param arrObjs
+	 */
 	public static <T extends Comparable<T>> void insertSort(T[] arrObjs) {
 
 		int j = 0;
