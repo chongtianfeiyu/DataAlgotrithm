@@ -19,85 +19,100 @@ public class Sort {
 		}
 	}
 
-	// 在最小堆中加入新的数据nNum
-	private static <T extends Comparable<T>> void MinHeapAddNumber(T[] a,
-			int n, T obj) {
-		a[n] = obj;
-		MinHeapFixup(a, n);
+	/**
+	 * 快速排序算法
+	 * 
+	 * @param arrObjs
+	 */
+	public static <T extends Comparable<T>> void quicKSort(T[] arrObjs) {
+		quickSort(arrObjs, 0, arrObjs.length - 1);
 	}
 
-	// 在最小堆中删除数
-	private static <T extends Comparable<T>> void MinHeapDeleteNumber(T a[],
-			int n) {
-		T obj = a[0];
-		a[0] = a[n - 1];
-		a[n - 1] = obj;
-		MinHeapFixdown(a, 0, n - 1);
-	}
+	private static <T extends Comparable<T>> void quickSort(T[] arrObjs,
+			int low, int hight) {
 
-	private static <T extends Comparable<T>> void MinHeapFixdown(T a[], int i,int n) {
-		int j;
-		T temp;
-		temp = a[i];
-		j = 2 * i + 1;
-		while (j < n) {
-			if (j + 1 < n && (a[j + 1].compareTo(a[j]) < 0)) // 在左右孩子中找最小的
-				j++;
-
-			if (a[j].compareTo(temp) >= 0)
-				break;
-
-			a[i] = a[j]; // 把较小的子结点往上移动,替换它的父结点
-			i = j;
-			j = 2 * i + 1;
+		if (low < hight) {
+			int pivot = partition(arrObjs, low, hight);
+			quickSort(arrObjs, low, pivot - 1);
+			quickSort(arrObjs, pivot + 1, hight);
 		}
-		a[i] = temp;
+
+	}
+
+	private static <T extends Comparable<T>> int partition(T[] arrObjs,
+			final int l, final int h) {
+
+		int left = l;
+		int right = h;
+		T flagObj = arrObjs[l];
+
+		while (left < right) {
+
+			while ((left < right) && (arrObjs[right].compareTo(flagObj) > 0)) {
+				--right;
+			}
+
+			if (left < right) {
+				arrObjs[left] = arrObjs[right];
+				++left;
+			}
+
+			while ((left < right) && (arrObjs[left].compareTo(flagObj) <= 0)) {
+				++left;
+			}
+
+			if (left < right) {
+				arrObjs[right] = arrObjs[left];
+				--right;
+			}
+		}
+
+		arrObjs[left] = flagObj;
+		return left;
+	}
+
+	// 重新调整小顶堆的算法
+	private static <T extends Comparable<T>> void MinHeapFixdown(T a[],
+			int parrentIndex, int length) {
+		int sonIndex;
+		T temp;
+		temp = a[parrentIndex];
+		sonIndex = 2 * parrentIndex + 1;
+		while (sonIndex < length) {
+
+			// 在左右孩子中找最小的
+			if (sonIndex + 1 < length
+					&& (a[sonIndex + 1].compareTo(a[sonIndex]) < 0))
+				sonIndex++;
+
+			if (a[sonIndex].compareTo(temp) >= 0)
+				break;
+			// 把较小的子结点往上移动,替换它的父结点
+			a[parrentIndex] = a[sonIndex];
+			parrentIndex = sonIndex;
+			sonIndex = 2 * parrentIndex + 1;
+		}
+		a[parrentIndex] = temp;
 	}
 
 	// 建立最小堆
-	private static <T extends Comparable<T>> void MakeMinHeap(T a[], int n) {
+	public static <T extends Comparable<T>> void MakeMinHeap(T a[]) {
+		int n = a.length;
 		for (int i = n / 2 - 1; i >= 0; i--)
 			MinHeapFixdown(a, i, n);
 	}
 
 	public static <T extends Comparable<T>> void heapSort(T a[]) {
 
+		MakeMinHeap(a);
+
 		int n = a.length;
+
 		for (int i = n - 1; i >= 1; i--) {
 			T obj = a[0];
-			a[0] = a[i - 1];
-			a[i - 1] = obj;
+			a[0] = a[i];
+			a[i] = obj;
 			MinHeapFixdown(a, 0, i);
-		}
-	}
-	
-	public static <T extends Comparable<T>> void heapSortInline(T a[]) {
-		
-		
-	}
-
-	private static <T extends Comparable<T>> void MinHeapFixup(T[] arrObjs,
-			int index) {
-		if (arrObjs != null) {
-			int j;
-			T tmp;
-			tmp = arrObjs[index];
-
-			// j为父亲节点的下标
-			j = (index - 1) / 2; // 父结点
-			while (j >= 0 && index != 0) {
-
-				// 比较父亲节点和子节点
-				if (arrObjs[j].compareTo(tmp) <= 0)
-					break;
-				// 把较大的子结点往下移动,替换它的子结点
-				arrObjs[index] = arrObjs[j];
-				// index记住这个父亲
-				index = j;
-				// j移动到爷爷
-				j = (index - 1) / 2;
-			}
-			arrObjs[index] = tmp;
 		}
 	}
 
