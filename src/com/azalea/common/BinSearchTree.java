@@ -121,11 +121,15 @@ public class BinSearchTree<T extends Comparable> {
 				deleteNode = deleteNode.getRightNode();
 			} else {
 				if ((deleteNode.hasLeftNode()) && (deleteNode.hasRightNode())) {
+					
 					BinNode<T> replaceNode = findMin(deleteNode.getRightNode());
+					
 					if (replaceNode.getParrentNode() == deleteNode) {
+						
 						transPlant(deleteNode, replaceNode);
 						replaceNode.setLeftNode(deleteNode.getLeftNode());
 						replaceNode.getLeftNode().setParrentNode(replaceNode);
+						
 					} else {
 						transPlant(replaceNode, replaceNode.getRightNode());
 						replaceNode.setRightNode(deleteNode.getRightNode());

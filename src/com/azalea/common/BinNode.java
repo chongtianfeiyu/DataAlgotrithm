@@ -7,11 +7,14 @@ package com.azalea.common;
  */
 public class BinNode<T extends Comparable> implements Comparable<BinNode<T>> {
 
-	private T data;
-
-	private BinNode<T> leftNode = null;
-	private BinNode<T> rightNode = null;
-	private BinNode<T> parrentNode = null;
+	protected T data = null;
+	
+	protected BinNode<T> leftNode = null;
+	protected BinNode<T> rightNode = null;
+	protected BinNode<T> parrentNode = null;
+	public static final int RED = 0;
+	public static final int BLACK = 1;
+	protected int color = BLACK;
 
 	public boolean hasLeftNode() {
 		return leftNode != null;
@@ -60,6 +63,14 @@ public class BinNode<T extends Comparable> implements Comparable<BinNode<T>> {
 
 	public void setRightNode(BinNode<T> rightNode) {
 		this.rightNode = rightNode;
+	}
+	
+	public int getColor() {
+		return this.color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
 	}
 
 	@Override
